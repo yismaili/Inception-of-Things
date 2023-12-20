@@ -7,23 +7,27 @@
 # you're doing.
 Vagrant.configure('2') do |config|
 
-  # set up the first machine
-  config.vm.define 'webserver1' do |webserver1|
-    webserver1.vm.box = 'debian/buster64'
-    webserver1.vm.hostname = 'webserver1'
-    webserver1.vm.provider 'virtualbox' do |vb|
-      vb.name = 'webserver1_nginx'
+  # set up the first machine (Server)
+  config.vm.define 'Server' do |server|
+    server.vm.box = 'debian/buster64'
+    server.vm.hostname = 'ServerS'
+    server.vm.network 'private_network', type: 'dhcp', adapter: 1
+    server.vm.network 'private_network', type: 'static', ip: '192.168.56.110', adapter: 2
+    server.vm.provider 'virtualbox' do |vb|
+      vb.name = 'Server_nginx'
       vb.cpus = '1'
       vb.memory = '512'
     end
   end
 
-  # set up the second machine
-  config.vm.define 'webserver2' do |webserver2|
-    webserver2.vm.box = 'debian/buster64'
-    webserver2.vm.hostname = 'webserver2'
-    webserver2.vm.provider 'virtualbox' do |vb|
-      vb.name = 'webserver2_nginx'
+  # set up the second machine (ServerWorker)
+  config.vm.define 'ServerWorker' do |server_worker|
+    server_worker.vm.box = 'debian/buster64'
+    server_worker.vm.hostname = 'ServerWorkerSW'
+    server_worker.vm.network 'private_network', type: 'dhcp', adapter: 1
+    server_worker.vm.network 'private_network', type: 'static', ip: '192.168.56.111', adapter: 2
+    server_worker.vm.provider 'virtualbox' do |vb|
+      vb.name = 'ServerWorker_nginx'
       vb.cpus = '1'
       vb.memory = '512'
     end
