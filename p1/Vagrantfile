@@ -8,6 +8,7 @@
 
 Vagrant.configure('2') do |config|
 
+  config.vm.boot_timeout = 60 # Increase to 10 minutes (adjust as needed)
   # set up the first machine (Server)
   config.vm.define 'yismaili' do |server|
     server.vm.box = 'debian/buster64'
@@ -21,28 +22,28 @@ Vagrant.configure('2') do |config|
     end
 
     # SSH Configuration for Server
-    server.ssh.insert_key = true
-    server.ssh.private_key_path = '~/.ssh/id_rsa'  # path of private key
+    config.ssh.insert_key = true
+    config.ssh.private_key_path = "~/.ssh/id_rsa" # path of private key
     server.ssh.username = 'vagrant'
   end
 
-  # set up the second machine (ServerWorker)
-  config.vm.define 'yismaili_1' do |server_worker|
-    server_worker.vm.box = 'debian/buster64'
-    server_worker.vm.hostname = 'ServerWorkerSW'
-    server_worker.vm.network 'private_network', type: 'dhcp', adapter: 1
-    server_worker.vm.network 'private_network', type: 'static', ip: '192.168.56.111', adapter: 2
-    server_worker.vm.provider 'virtualbox' do |vb|
-      vb.name = 'ServerWorker_nginx'
-      vb.cpus = 1
-      vb.memory = 512
-    end
+  # # set up the second machine (ServerWorker)
+  # config.vm.define 'yismaili_1' do |server_worker|
+  #   server_worker.vm.box = 'debian/buster64'
+  #   server_worker.vm.hostname = 'ServerWorkerSW'
+  #   server_worker.vm.network 'private_network', type: 'dhcp', adapter: 1
+  #   server_worker.vm.network 'private_network', type: 'static', ip: '192.168.56.111', adapter: 2
+  #   server_worker.vm.provider 'virtualbox' do |vb|
+  #     vb.name = 'ServerWorker_nginx'
+  #     vb.cpus = 1
+  #     vb.memory = 512
+  #   end
 
-    # SSH Configuration for ServerWorker
-    server_worker.ssh.insert_key = true
-    server_worker.ssh.private_key_path = '~/.ssh/id_rsa'  # path of private key
-    server_worker.ssh.username = 'vagrant'
-  end
+  #   # SSH Configuration for ServerWorker
+  #   config.ssh.insert_key = true
+  #   config.ssh.private_key_path = "~/.ssh/id_rsa" # path of private key
+  #   server_worker.ssh.username = 'vagrant'
+  # end
 
 end
 
