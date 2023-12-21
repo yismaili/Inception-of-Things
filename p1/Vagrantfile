@@ -6,45 +6,83 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 
-Vagrant.configure('2') do |config|
+# Vagrant.configure('2') do |config|
+#   # set up  the Server
+#   config.vm.define 'yismaili' do |server|
+#     server.vm.box = 'debian/buster64'
+#     server.vm.hostname = 'ServerS'
+#     server.vm.provider 'virtualbox' do |vb|
+#       vb.name = 'Server_nginx'
+#       vb.cpus = 1
+#       vb.memory = 512
+#     end
 
-  config.vm.boot_timeout = 300 # Increase to 10 minutes (adjust as needed)
-  # set up the first machine (Server)
+#    end
+
+#   # set up the ServerWorker
+#   config.vm.define 'yismaili_1' do |server_worker|
+#     server_worker.vm.box = 'debian/buster64'
+#     server_worker.vm.hostname = 'ServerWorkerSW'
+#     server_worker.vm.provider 'virtualbox' do |vb|
+#       vb.name = 'ServerWorker_nginx'
+#       vb.cpus = 1
+#       vb.memory = 512
+#     end
+
+#   end
+
+# end
+
+
+Vagrant.configure('2') do |config|
+  # Set up the Server
   config.vm.define 'yismaili' do |server|
     server.vm.box = 'debian/buster64'
     server.vm.hostname = 'ServerS'
-    # server.vm.network 'private_network', type: 'dhcp', adapter: 1
-    # server.vm.network 'private_network', type: 'static', ip: '192.168.56.110', adapter: 2
+    
+    # Configure eth1 with a dedicated IP
+    server.vm.network 'private_network', type: 'dhcp', virtualbox__intnet: 'eth1'
+    
+    # VirtualBox provider settings
     server.vm.provider 'virtualbox' do |vb|
       vb.name = 'Server_nginx'
       vb.cpus = 1
       vb.memory = 512
     end
 
-    # SSH Configuration for Server
-    # config.ssh.insert_key = true
-    # config.ssh.private_key_path = "/home/dexters/.ssh/id_rsa" # path of private key
-    # config.ssh.forward_agent = true
-    # server.ssh.username = 'vagrant'
-   end
+    # Enable passwordless SSH
+    server.vm.provision 'shell', inline: <<-SHELL
+      mkdir -p ~/.ssh
+      chmod 700 ~/.ssh
+      ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -N ""
+      cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+      chmod 600 ~/.ssh/authorized_keys
+    SHELL
+  end
 
-  # set up the second machine (ServerWorker)
+  # Set up the ServerWorker
   config.vm.define 'yismaili_1' do |server_worker|
     server_worker.vm.box = 'debian/buster64'
     server_worker.vm.hostname = 'ServerWorkerSW'
-    # server_worker.vm.network 'private_network', type: 'dhcp', adapter: 1
-    # server_worker.vm.network 'private_network', type: 'static', ip: '192.168.56.111', adapter: 2
+    
+    # Configure eth1 with a dedicated IP
+    server_worker.vm.network 'private_network', type: 'dhcp', virtualbox__intnet: 'eth1'
+    
+    # VirtualBox provider settings
     server_worker.vm.provider 'virtualbox' do |vb|
       vb.name = 'ServerWorker_nginx'
       vb.cpus = 1
       vb.memory = 512
     end
 
-  #   # SSH Configuration for ServerWorker
-  #   config.ssh.insert_key = true
-  #   config.ssh.private_key_path = "~/.ssh/id_rsa" # path of private key
-  #   server_worker.ssh.username = 'vagrant'
+    # Enable passwordless SSH
+    server_worker.vm.provision 'shell', inline: <<-SHELL
+      mkdir -p ~/.ssh
+      chmod 700 ~/.ssh
+      ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -N ""
+      cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+      chmod 600 ~/.ssh/authorized_keys
+    SHELL
   end
-
 end
 
