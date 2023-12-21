@@ -18,13 +18,7 @@ Vagrant.configure('2') do |config|
     end
 
     # Enable passwordless SSH
-    server.vm.provision 'shell', inline: <<-SHELL
-      mkdir -p ~/.ssh
-      chmod 700 ~/.ssh
-      ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -N ""
-      cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-      chmod 600 ~/.ssh/authorized_keys
-    SHELL
+    server.vm.provision "shell", path: "provision.sh", privileged: false if Vagrant::Util::Platform.linux?
   end
 
   # Set up the ServerWorker
@@ -43,12 +37,7 @@ Vagrant.configure('2') do |config|
     end
 
     # Enable passwordless SSH
-    server_worker.vm.provision 'shell', inline: <<-SHELL
-      mkdir -p ~/.ssh
-      chmod 700 ~/.ssh
-      ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -N ""
-      cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-      chmod 600 ~/.ssh/authorized_keys
-    SHELL
+    server_worker.vm.provision "shell", path: "provision.sh", privileged: false if Vagrant::Util::Platform.linux?
   end
 end
+
