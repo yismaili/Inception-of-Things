@@ -18,7 +18,7 @@ Vagrant.configure('2') do |config|
     end
 
     # Enable passwordless SSH
-    server.vm.provision "shell", path: "provision.sh", privileged: false if Vagrant::Util::Platform.linux?
+    server.vm.provision "shell", path: "scripts/provision.sh", privileged: false if Vagrant::Util::Platform.linux?
   end
 
   # Set up the ServerWorker
@@ -37,7 +37,7 @@ Vagrant.configure('2') do |config|
     end
 
     # Enable passwordless SSH
-    server_worker.vm.provision "shell", path: "provision.sh", privileged: false if Vagrant::Util::Platform.linux?
+    server_worker.vm.provision "shell", path: "scripts/provision.sh", privileged: false if Vagrant::Util::Platform.linux?
   end
 end
 
