@@ -13,15 +13,15 @@ Vagrant.configure('2') do |config|
     # VirtualBox provider settings
     server.vm.provider 'virtualbox' do |vb|
       vb.name = 'Server_nginx'
-      vb.cpus = 1
-      vb.memory = 1024
+      # vb.cpus = 1
+      # vb.memory = 3072
     end
 
     # Enable passwordless SSH
-    server.vm.provision "shell", path: "scripts/provision.sh", privileged: false if Vagrant::Util::Platform.linux?
+   # server.vm.provision "shell", path: "scripts/provision.sh", privileged: false if Vagrant::Util::Platform.linux?
 
-    # Synced folder configuration
-    server.vm.synced_folder "./confs", "/vagrant", disabled: true
+    # Synced folder
+    server.vm.synced_folder ".", "/vagrant"
   end
 end
 
