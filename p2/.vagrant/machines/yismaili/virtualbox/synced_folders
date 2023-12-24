@@ -1,1 +1,1 @@
-{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/dexters/Desktop/Inception-of-Things/p2","disabled":false,"owner":"root","group":"root","__vagrantfile":true}}}
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/dexters/Desktop/Inception-of-Things/p2/confs","disabled":false,"owner":"root","group":"root","__vagrantfile":true}}}
