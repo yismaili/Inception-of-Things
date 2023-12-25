@@ -30,6 +30,17 @@ sudo chown $USER ~/.kube/config
 sudo chmod 600 ~/.kube/config
 export KUBECONFIG=~/.kube/config
 
+# Create a swap file (adjust the size as needed)
+sudo fallocate -l 2G /swapfile
+
+# Set up the swap file
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# Make the change permanent by adding an entry to /etc/fstab
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
 # Install Docker
 sudo apt-get update -y
 sudo apt-get upgrade -y
