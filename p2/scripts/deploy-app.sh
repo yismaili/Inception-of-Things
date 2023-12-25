@@ -1,29 +1,35 @@
 #!/usr/bin/env bash
 
-# Change directory 
-cd ../../vagrant/app1
+# Exit script if any command fails
+set -e
 
-# Start local Docker registry
-sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
 
-# Build Docker image
-sudo docker build -t localhost:5000/app1:v1 ./app1
-sudo docker push localhost:5000/app1:v1
-sudo docker build -t localhost:5000/app2:v1 ./app2
-sudo docker push localhost:5000/app2:v1
-sudo docker build -t localhost:5000/app3:v1 ./app3
-sudo docker push localhost:5000/app3:v1
+# Log in to Docker Hub
+sudo docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD" $DOCKER_REGISTRY
 
-# Push Docker image to local registry
-cd ..
+# Log out from Docker Hub (optional)
+docker logout
+
+cd ../../vagrant
+
+# Check if Docker registry is already running
+if [ ! "$(sudo docker ps -q -f name=registry)" ]; then
+    # Start local Docker registry
+    sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
+fi
+
+# Build and push Docker images
+for app in app1 app2 app3; do
+    echo "Building and pushing Docker image for $app"
+    sudo docker build -t localhost:5000/$app:v1 ./$app
+    sudo docker push localhost:5000/$app:v1
+done
 
 # Apply Kubernetes configurations
-sudo kubectl apply -f app1-deployment.yaml
-sudo kubectl apply -f app1-service.yaml
-sudo kubectl apply -f app2-deployment.yaml
-sudo kubectl apply -f app2-service.yaml
-sudo kubectl apply -f app3-deployment.yaml
-sudo kubectl apply -f app3-service.yaml
+for app in app1 app2 app3; do
+    echo "Applying Kubernetes configuration for $app"
+    sudo kubectl apply -f ${app}-deployment.yaml
+    sudo kubectl apply -f ${app}-service.yaml
+done
 
-# Print a message
-echo "you good bro!!!!"
+echo "Deployment completed successfully!"
