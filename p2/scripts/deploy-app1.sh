@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Change directory using cd before running subsequent commands
+# Change directory 
 cd ../../vagrant/app1
 
 # Start local Docker registry
@@ -11,8 +11,6 @@ sudo docker build -t localhost:5000/app1:v1 ./app1
 
 # Push Docker image to local registry
 sudo docker push localhost:5000/app1:v1
-
-# Change back to the previous directory for the current shell session
 cd ..
 
 # Apply Kubernetes configurations
