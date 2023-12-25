@@ -8,13 +8,13 @@ sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
 
 # Build Docker image
 sudo docker build -t localhost:5000/app1:v1 ./app1
+sudo docker push localhost:5000/app1:v1
 sudo docker build -t localhost:5000/app2:v1 ./app2
+sudo docker push localhost:5000/app2:v1
 sudo docker build -t localhost:5000/app3:v1 ./app3
+sudo docker push localhost:5000/app3:v1
 
 # Push Docker image to local registry
-sudo docker push localhost:5000/app1:v1
-sudo docker push localhost:5000/app2:v1
-sudo docker push localhost:5000/app3:v1
 cd ..
 
 # Apply Kubernetes configurations
