@@ -1,0 +1,1 @@
+{"dependencies":[["vagrant-bindfs",["= 1.2.0"]]],"checksum":"4e2533db34465bbbe30c78363e56184bbc70a944c1d6e8d038e131f1480fe657","vagrant_version":"2.2.19"}

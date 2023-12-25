@@ -7,5 +7,5 @@ spec:
     app: app3
   ports:
   - protocol: TCP
-    port: 8383
+    port: 80
     targetPort: 8383

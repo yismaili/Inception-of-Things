@@ -3,6 +3,7 @@
 # Exit script if any command fails
 set -e
 
+
 # Log in to Docker Hub
 sudo docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD" $DOCKER_REGISTRY
 
@@ -30,5 +31,7 @@ for app in app1 app2 app3; do
     sudo kubectl apply -f ${app}-deployment.yaml
     sudo kubectl apply -f ${app}-service.yaml
 done
+
+sudo kubectl apply -f apps-ingress.yaml
 
 echo "Deployment completed successfully!"
