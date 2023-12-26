@@ -3,7 +3,6 @@
 # Exit script if any command fails
 set -e
 
-
 # Log in to Docker Hub
 sudo docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD" $DOCKER_REGISTRY
 
