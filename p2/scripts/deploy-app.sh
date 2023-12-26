@@ -17,6 +17,8 @@ if [ ! "$(sudo docker ps -q -f name=registry)" ]; then
     sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
 fi
 cd ../confs
+sudo docker image prune -f
+
 # Build and push Docker images
 for app in app1 app2 app3; do
     echo "Building and pushing Docker image for $app"
