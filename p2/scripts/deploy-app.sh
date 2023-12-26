@@ -22,8 +22,8 @@ sudo docker image prune -f
 # Build and push Docker images
 for app in app1 app2 app3; do
     echo "Building and pushing Docker image for $app"
-    sudo docker build -t localhost:5000/$app:v1 ./$app
-    sudo docker push localhost:5000/$app:v1
+    sudo docker build -t localhost:5000/$app:v3 ./$app
+    sudo docker push localhost:5000/$app:v3
 done
 
 # Apply Kubernetes configurations

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app3-container
-          image: localhost:5000/app3:v1
+          image: localhost:5000/app3:v3
           ports:
             - containerPort: 80
             
