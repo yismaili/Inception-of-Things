@@ -16,4 +16,5 @@ spec:
         - name: app2-container
           image: localhost:5000/app2:v1
           ports:
-            - containerPort: 8282
+            - containerPort: 80
+            
