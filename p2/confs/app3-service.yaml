@@ -8,4 +8,4 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-  clusterIP: 10.43.193.160
+  # clusterIP: 10.43.193.160

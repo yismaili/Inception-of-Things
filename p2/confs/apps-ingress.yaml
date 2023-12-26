@@ -23,7 +23,7 @@ spec:
           service:
             name: app2-service
             port:
-              number: 80
+              number: 81
   - http:
       paths:
       - path: /
@@ -32,4 +32,4 @@ spec:
           service:
             name: app3-service
             port:
-              number: 80
+              number: 82
