@@ -7,4 +7,4 @@ spec:
     app: app3
   ports:
   - protocol: TCP
-    port: 80
+    port: 8383
