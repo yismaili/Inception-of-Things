@@ -7,4 +7,4 @@ spec:
     app: app1
   ports:
   - protocol: TCP
-    port: 8181
+    port: 80

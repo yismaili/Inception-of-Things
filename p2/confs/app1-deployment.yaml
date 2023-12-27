@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: app1-container
-          image: localhost:5000/app1:v4
+          image: localhost:5000/app1:v5
           ports:
-            - containerPort: 8181
+            - containerPort: 80

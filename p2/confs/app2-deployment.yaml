@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: app2-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: app2
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app2-container
-          image: localhost:5000/app2:v4
+          image: localhost:5000/app2:v5
           ports:
-            - containerPort: 8282
+            - containerPort: 80
             
