@@ -54,4 +54,3 @@ sudo apt-cache policy docker-ce
 sudo apt install -y docker-ce
 sudo systemctl status docker
 
-

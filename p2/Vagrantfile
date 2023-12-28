@@ -3,6 +3,7 @@
 
 Vagrant.configure('2') do |config|
   # Set up the Server
+  config.ssh.forward_agent = true
   config.vm.define 'yismaili' do |server|
     server.vm.box = 'debian/buster64'
     server.vm.hostname = 'ServerS'
