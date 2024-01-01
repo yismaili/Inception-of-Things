@@ -31,9 +31,9 @@ for app in app1 app2 app3; do
     echo "Applying Kubernetes configuration for $app"
     sudo kubectl apply -f ${app}-deployment.yaml
     sudo kubectl apply -f ${app}-service.yaml
+    sudo kubectl apply -f ${app}-ingress.yaml
 done
 
-sudo kubectl apply -f apps-ingress.yaml
 
 
 echo "Deployment completed successfully!"

@@ -9,19 +9,18 @@ sudo apt-get install -y curl wget
 
 SERVER_IP="192.168.56.110"
 
-# Install k3s and set IP address
-sudo curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-ip "$SERVER_IP"
+#install docker
+sudo apt install -y docker.io
 
-# Install Docker
-sudo apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
+# start and enable docker
+sudo systemctl start docker
+sudo systemctl enable docker
 
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+#install k3d using the script
+wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+k3d --version
 
-echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" |
-sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# Create a Kubernetes cluster with k3d
+k3d cluster create master-cluster
 
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-# Check Docker status
-sudo systemctl status docker
