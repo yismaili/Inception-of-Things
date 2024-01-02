@@ -13,8 +13,8 @@ Vagrant.configure('2') do |config|
     # VirtualBox provider settings
     server.vm.provider 'virtualbox' do |vb|
       vb.name = 'Server_nginx'
-      vb.cpus = 1
-      vb.memory = 1024
+      vb.cpus = 2
+      vb.memory = 10240
     end
 
     server.vm.provision "shell", path: "scripts/setup.sh", privileged: false if Vagrant::Util::Platform.linux?

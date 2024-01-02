@@ -7,19 +7,36 @@ sudo apt-get upgrade -y
 # Install curl and wget
 sudo apt-get install -y curl wget
 
-#install docker
-sudo apt install -y docker.io
+# Install Docker
+sudo apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
-# start and enable docker
-sudo systemctl start docker
-sudo systemctl enable docker
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-#install k3d using the script
-sudo wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
-sudo k3d --version
+echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" |
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Check Docker status
+sudo systemctl status docker
+
+# install kubectl
+sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+sudo chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+#install k3d 
+sudo wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
 # Create a Kubernetes cluster with k3d
-sudo k3d cluster create master-cluster
+sudo k3d cluster create master-cluster -p "8888:3000"
 
+# create namespaces
+sudo kubectl create namespace argocd
+sudo kubectl create namespace dev
+
+# setup argocd
+sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 
