@@ -18,6 +18,7 @@ Vagrant.configure('2') do |config|
     end
 
     server.vm.provision "shell", path: "scripts/setup.sh", privileged: false if Vagrant::Util::Platform.linux?
+    server.vm.provision "shell", path: "scripts/deploy-app.sh", privileged: false if Vagrant::Util::Platform.linux?
     
     # Synced folder
     server.vm.synced_folder "confs/", "/vagrant", owner: "root", group: "root"
