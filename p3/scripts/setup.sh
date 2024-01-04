@@ -33,10 +33,13 @@ sudo wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh |
 sudo k3d cluster create master-cluster -p "8888:3000"
 
 # create namespaces
-sudo kubectl create namespace argo-cd
+sudo kubectl create namespace argocd
 sudo kubectl create namespace dev
 
 # setup argocd
-sudo kubectl apply -n argo-cd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+watch kubectl get pods -n argocd
+
+sudo kubectl port-forward svc/argocd-server -n argocd 8080:443
 

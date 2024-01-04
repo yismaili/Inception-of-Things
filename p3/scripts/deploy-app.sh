@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-
+DOCKER_USERNAME="yismaili"
+DOCKER_PASSWORD="pass1227@"
+DOCKER_REGISTRY="https://index.docker.io/v1/"  # Docker Hub registry URL
 # Log in to Docker Hub
 sudo docker login --username "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD" $DOCKER_REGISTRY
 
 # Log out from Docker Hub (optional)
 docker logout
-
-cd ../../vagrant
 
 # Check if Docker registry is already running
 if [ ! "$(sudo docker ps -q -f name=registry)" ]; then
@@ -15,7 +15,7 @@ if [ ! "$(sudo docker ps -q -f name=registry)" ]; then
     sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
 fi
 
-
+cd ../confs
 # Build and push Docker images
     
 echo "Building and pushing Docker image for app"
