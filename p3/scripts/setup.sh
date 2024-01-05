@@ -1,43 +1,51 @@
 #!/bin/bash
 
-#install docker
+# Add error handling
+set -e
 
-    sudo apt update
-    sudo apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+# Update package lists
+sudo apt update
+
+# Check if Docker is already installed
+if ! command -v docker &> /dev/null; then
+    # Install Docker
+    sudo apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
     sudo apt update
-    apt-cache policy docker-ce
+    sudo apt install -y docker-ce
+else
+    echo "Docker is already installed. Skipping installation."
+fi
 
-    sudo apt install docker-ce
-    sudo systemctl status docker
+# Check Docker status
+sudo systemctl status docker
 
-#install k3d
+# Install k3d
+wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG=v5.0.0 bash
 
-  wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG=v5.0.0 bash
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
 
-# install kubectl 
+# Check kubectl version
+kubectl version --client
 
-  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
-  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-   
-  echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
-   
-  sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-   
-   
-  chmod +x kubectl
-  mkdir -p ~/.local/bin
-  mv ./kubectl ~/.local/bin/kubectl
-
-  kubectl version --client
-
-
-# create cluster
-
+# Create k3d cluster
 sudo k3d cluster create mycluster
 
+# Wait for the cluster to be ready
+until sudo kubectl get nodes &> /dev/null; do
+    echo "Waiting for the cluster to be ready..."
+    sleep 5
+done
+
+# Get nodes
 sudo kubectl get nodes
 
 
