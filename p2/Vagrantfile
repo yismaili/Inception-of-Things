@@ -1,18 +1,16 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-
 Vagrant.configure('2') do |config|
   # Set up the Server
-  config.vm.define 'yismaili' do |server|
-    server.vm.box = 'debian/buster64'
-    server.vm.hostname = 'ServerS'
-    
-    # Configure eth1 with a dedicated IP
+  config.vm.box = "debian/buster64" 
+  config.vm.box_url = "https://app.vagrantup.com/debian/boxes/buster64"
+  
+  config.vm.define 'yismailiS' do |server|
+    server.vm.hostname = 'yismailiS'
     server.vm.network 'private_network', ip: '192.168.56.110'
-    
     # VirtualBox provider settings
     server.vm.provider 'virtualbox' do |vb|
-      vb.name = 'Server_nginx'
+      # vb.name = "yismailiS"
       vb.cpus = 1
       vb.memory = 1024
     end
