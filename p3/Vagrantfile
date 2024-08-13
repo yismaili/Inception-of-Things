@@ -22,3 +22,8 @@ Vagrant.configure('2') do |config|
     server.vm.synced_folder "confs/", "/vagrant", owner: "root", group: "root"
   end
 end
+
+
+
+
+fix this "my subject was good subject, and my expreince in this company not bad just thr supervasor was not good mane "
