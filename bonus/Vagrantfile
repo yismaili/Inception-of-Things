@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure('2') do |config|
+  # Set up the Server
+  config.vm.define 'yismaili' do |server|
+    server.vm.box = 'debian/buster64'
+    server.vm.hostname = 'master'
+    
+    # Configure eth1 with a dedicated IP
+    # server.vm.network 'private_network', ip: '192.168.56.110'
+    
+    # VirtualBox provider settings
+    server.vm.provider 'virtualbox' do |vb|
+      vb.name = 'Server_nginx'
+      
+    end
+
+    server.vm.provision "shell", path: "scripts/setup.sh", privileged: false if Vagrant::Util::Platform.linux?
+    
+    # Synced folder
+    server.vm.synced_folder "confs/", "/vagrant", owner: "root", group: "root"
+  end
+end
