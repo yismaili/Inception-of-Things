@@ -9,7 +9,7 @@ spec:
     namespace: dev
   project: default
   source:
-    repoURL: http://0.0.0.0:8000/root/lot
+    repoURL: http://10.13.9.6:8000/root/lot_gitlab
     path: dev
     targetRevision: HEAD
   syncPolicy:

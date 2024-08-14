@@ -33,7 +33,9 @@ until sudo kubectl get nodes &> /dev/null; do
 done
 # sleep 100
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d >> password.txt
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+#kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 
 kubectl apply -f app.yaml
 
