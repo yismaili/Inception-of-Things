@@ -9,7 +9,7 @@ spec:
     namespace: dev
   project: default
   source:
-    repoURL: http://10.13.9.6:8000/root/lot_gitlab
+    repoURL: http://gitlab-service.gitlab.svc.cluster.local/root/lab-lot.git/
     path: dev
     targetRevision: HEAD
   syncPolicy:
