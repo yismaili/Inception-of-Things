@@ -6,10 +6,6 @@ sudo apt-get install -y curl
 # Install K3s (Agent Mode)
 K3S_URL=http://192.168.56.110:6443 K3S_TOKEN=$(curl -s http://192.168.56.110:6443/v1/node/token) curl -sfL https://get.k3s.io | sh -s -
 
-curl -LO "https://dl.k8s.io/release/v1.24.3/bin/linux/amd64/kubectl" &&
-chmod +x ./kubectl &&
-sudo mv ./kubectl /usr/local/bin/kubectl
-
 # Configure kubectl
 mkdir -p ~/.kube
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
