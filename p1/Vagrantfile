@@ -1,32 +1,36 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure('2') do |config|
-  # Set up the Server
+Vagrant.configure("2") do |config|
+
   config.vm.box = "bento/debian-11"
-  config.vm.define 'yismailiS' do |server|
-    server.vm.hostname = 'yismailiS'
-    server.vm.network 'private_network', ip: '192.168.56.110'
-    # VirtualBox provider settings
-    server.vm.provider 'virtualbox' do |vb|
-      vb.name = "yismaili_S"
-      vb.cpus = 1
-      vb.memory = 1024
+
+  server_name = "aabdouS"
+  server_worker_name = "aabdouSW"
+
+  config.vm.define server_name do |s|
+    s.vm.hostname = server_name
+    s.vm.provision "shell", path: "./scripts/init_server.sh"
+    s.vm.network 'private_network', ip: '192.168.56.110'
+
+    s.vm.provider "virtualbox" do |vb|
+  	  vb.cpus = 1
+      vb.memory = "1024"
+      vb.name = server_name
     end
-    server.vm.provision "shell", path: "scripts/server.sh"
   end
 
-  config.vm.define 'yismailiSW' do |serverWorker|
 
-    serverWorker.vm.hostname = 'yismailiSW'
-    serverWorker.vm.network 'private_network', ip: '192.168.56.111'
-    serverWorker.vm.provider 'virtualbox' do |vb|
-      vb.name = "yismaili_SW"
-      vb.cpus = 1
-      vb.memory = 1024
+  config.vm.define server_worker_name do |s|
+    s.vm.hostname = server_worker_name
+    s.vm.provision "shell", path: "./scripts/init_worker.sh"
+    s.vm.network 'private_network', ip: '192.168.56.111'
+
+    s.vm.provider "virtualbox" do |vb|
+  	  vb.cpus = 1
+      vb.memory = "1024"
+      vb.name = server_worker_name
     end
-
-    serverWorker.vm.provision "shell", path: "scripts/serverWorker.sh"
   end
+
 end
-
