@@ -1,23 +1,21 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-Vagrant.configure('2') do |config|
-  # Set up the Server
-  config.vm.box = "bento/debian-11"
-  
-  config.vm.define 'yismailiS' do |server|
-    server.vm.hostname = 'yismailiS'
-    server.vm.network 'private_network', ip: '192.168.56.110'
-    # VirtualBox provider settings
-    server.vm.provider 'virtualbox' do |vb|
-      # vb.name = "yismaili_S"
-      vb.cpus = 1
-      vb.memory = 1024
-    end
 
-    server.vm.provision "shell", path: "./scripts/setup-env.sh"
-    server.vm.provision "shell", path: "./scripts/deploy-app.sh"
-    
-    # Synced folder
-    server.vm.synced_folder "confs/", "/vagrant", owner: "root", group: "root"
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "bento/debian-11"
+
+  server_name = "aabdouS"
+
+  config.vm.define server_name do |s|
+    s.vm.hostname = server_name
+    s.vm.provision "shell", path: "./scripts/init_server.sh"
+    s.vm.network "private_network", ip: '192.168.56.110'
+
+    s.vm.provider "virtualbox" do |vb|
+      vb.cpus = 1
+      vb.memory = "1024"
+      vb.name = server_name
+    end
   end
 end
