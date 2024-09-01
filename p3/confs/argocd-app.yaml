@@ -9,7 +9,7 @@ spec:
     namespace: dev
   project: default
   source:
-    repoURL: https://github.com/yismaili/loT.git
+    repoURL: https://github.com/yismaili/yismaili.git
     path: dev
     targetRevision: HEAD
   syncPolicy:
