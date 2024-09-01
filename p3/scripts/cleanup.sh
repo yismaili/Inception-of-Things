@@ -2,14 +2,6 @@
 
 kubectl delete namespace dev
 kubectl delete namespace argocd
-sudo systemctl stop k3s
-/usr/local/bin/k3s-uninstall.sh
-sudo rm -rf /etc/rancher/k3s
-sudo rm -rf /var/lib/rancher/k3s
-sudo rm -rf /var/log/k3s
-sudo rm -rf /var/lib/kubelet
-sudo rm -rf /var/lib/etcd
-sudo rm -f /usr/local/bin/k3s
 sudo rm -f /usr/local/bin/kubectl
 
 k3d cluster list
