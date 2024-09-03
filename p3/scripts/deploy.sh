@@ -14,6 +14,6 @@ while [[ $(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o
 done
 
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d > password.txt
-kubectl apply -f ../confs/argocd-app.yaml
+# kubectl apply -f ../confs/argocd-app.yaml
 # kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:80
