@@ -3,7 +3,7 @@
 set -ex 
 
 sudo apt-get update -y
-sudo apt install curl
+sudo apt install curl 
 
 # Install Docker
 sudo apt-get install -y docker.io

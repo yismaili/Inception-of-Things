@@ -2,6 +2,7 @@
 
 kubectl delete namespace dev
 kubectl delete namespace argocd
+kubectl delete namespace gitlab
 sudo rm -f /usr/local/bin/kubectl
 
 k3d cluster list
